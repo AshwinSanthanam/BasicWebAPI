@@ -8,15 +8,15 @@ namespace BasicWebApi.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost]
-        public string AuthenticateUser([FromBody]AuthenticateUserRequestBody requestBody)
+        public IActionResult AuthenticateUser([FromBody]AuthenticateUserRequestBody requestBody)
         {
             if(requestBody.Email == "ashwin@gmail.com" && requestBody.Password == "password-1")
             {
-                return "Login success";
+                return new OkResult();
             }
             else
             {
-                return "Login failed";
+                return new UnauthorizedResult();
             }
         }
     }
