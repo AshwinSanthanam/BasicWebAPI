@@ -1,6 +1,8 @@
+using BasicWebApi.DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +41,11 @@ namespace BasicWebApi
                     ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is a secret key"))
                 };
+            });
+
+            services.AddDbContext<BasicWebAPIDbContext>(o =>
+            {
+                o.UseSqlServer("data source=.;initial catalog=BasicWebAPIDev;integrated security=SSPI");
             });
 
             services.AddControllers();
