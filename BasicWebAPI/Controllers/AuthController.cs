@@ -1,4 +1,5 @@
 ﻿using BasicWebApi.ApiResource.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +31,13 @@ namespace BasicWebApi.Controllers
             {
                 return new UnauthorizedResult();
             }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult SecureMethod()
+        {
+            return new OkObjectResult("Secure method is called");
         }
 
         private string GenerateJwt(IEnumerable<Claim> claims, DateTime expiry, string key)
