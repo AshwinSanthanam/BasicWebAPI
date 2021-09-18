@@ -29,7 +29,8 @@ namespace BasicWebApi.Controllers
             {
                 IEnumerable<Claim> claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Email, requestBody.Email)
+                    new Claim(ClaimTypes.Email, requestBody.Email),
+                    new Claim(ClaimTypes.Role, "user")
                 };
                 string jwt = GenerateJwt(claims, DateTime.Now.AddDays(8), _configuration.GetSection("SecretKey").Value);
                 return new OkObjectResult(jwt);
@@ -41,7 +42,7 @@ namespace BasicWebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "user")]
         public IActionResult TestAuthorize()
         {
             return new OkResult();
